@@ -1,9 +1,9 @@
 ﻿using System.Net;
-using Identity.Api.Core.Dto.UseCaseResponses;
-using Identity.Api.Core.Interfaces;
-using Identity.Api.Serialization;
+using Identity.Core.Dto.UseCaseResponses;
+using Identity.Core.Interfaces;
+using Identity.Serialization;
 
-namespace Identity.Api.Presenters
+namespace Identity.Presenters
 {
     public sealed class RegisterUserPresenter : IOutputPort<RegisterUserResponse>
     {

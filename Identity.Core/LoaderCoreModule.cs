@@ -1,15 +1,16 @@
 ﻿using Autofac;
-using Identity.Api.Core.Interfaces.UseCases;
-using Identity.Api.Core.UseCases;
+using Identity.Core.Interfaces.UseCases;
+using Identity.Core.UseCases;
 
-namespace Identity.Api.Core
+namespace Identity.Core
 {
-  public class LoaderCoreModule : Module
-  {
-    protected override void Load(ContainerBuilder builder)
+    public class LoaderCoreModule : Module
     {
-      builder.RegisterType<RegisterUserUseCase>().As<IRegisterUserUseCase>().InstancePerLifetimeScope();
-      builder.RegisterType<LoginUseCase>().As<ILoginUseCase>().InstancePerLifetimeScope();
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<RegisterUserUseCase>().As<IRegisterUserUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<LoginUseCase>().As<ILoginUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<ExchangeRefreshTokenUseCase>().As<IExchangeRefreshTokenUseCase>().InstancePerLifetimeScope();
+        }
     }
-  }
 }

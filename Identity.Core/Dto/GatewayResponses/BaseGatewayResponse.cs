@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Identity.Api.Core.Dto.GatewayResponses
+namespace Identity.Core.Dto.GatewayResponses
 {
   public abstract class BaseGatewayResponse
   {

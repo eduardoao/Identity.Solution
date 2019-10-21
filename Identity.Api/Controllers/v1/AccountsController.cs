@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Identity.Api.Core.Dto.UseCaseRequests;
-using Identity.Api.Core.Interfaces.UseCases;
-using Identity.Api.Presenters;
+using Identity.Core.Dto.UseCaseRequests;
+using Identity.Core.Interfaces.UseCases;
+using Identity.Presenters;
 
-namespace Identity.Api.Controllers
+namespace Identity.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
@@ -21,13 +21,13 @@ namespace Identity.Api.Controllers
 
         // POST api/accounts
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] RegisterUserRequest request)
+        public async Task<ActionResult> Post([FromBody] Models.Request.RegisterUserRequest request)
         {
             if (!ModelState.IsValid)
-            { // re-render the view when validation failed.
+            {
                 return BadRequest(ModelState);
             }
-            await _registerUserUseCase.Handle(new RegisterUserRequest(request.FirstName,request.LastName,request.Email, request.UserName,request.Password), _registerUserPresenter);
+            await _registerUserUseCase.Handle(new RegisterUserRequest(request.FirstName, request.LastName, request.Email, request.UserName, request.Password), _registerUserPresenter);
             return _registerUserPresenter.ContentResult;
         }
     }

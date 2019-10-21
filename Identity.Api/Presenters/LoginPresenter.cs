@@ -1,23 +1,23 @@
 ﻿using System.Net;
-using Identity.Api.Core.Dto.UseCaseResponses;
-using Identity.Api.Core.Interfaces;
-using Identity.Api.Serialization;
+using Identity.Core.Dto.UseCaseResponses;
+using Identity.Core.Interfaces;
+using Identity.Serialization;
 
-namespace Identity.Api.Presenters
+namespace Identity.Presenters
 {
-  public sealed class LoginPresenter : IOutputPort<LoginResponse>
-  {
-    public JsonContentResult ContentResult { get; }
-
-    public LoginPresenter()
+    public sealed class LoginPresenter : IOutputPort<LoginResponse>
     {
-      ContentResult = new JsonContentResult();
-    }
+        public JsonContentResult ContentResult { get; }
 
-    public void Handle(LoginResponse response)
-    {
-      ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.Unauthorized);
-      ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(response.Token) : JsonSerializer.SerializeObject(response.Errors);
+        public LoginPresenter()
+        {
+            ContentResult = new JsonContentResult();
+        }
+
+        public void Handle(LoginResponse response)
+        {
+            ContentResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.Unauthorized);
+            ContentResult.Content = response.Success ? JsonSerializer.SerializeObject(new Models.Response.LoginResponse(response.AccessToken, response.RefreshToken)) : JsonSerializer.SerializeObject(response.Errors);
+        }
     }
-  }
 }

@@ -1,34 +1,48 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Identity.Api.Core.Dto.UseCaseRequests;
-using Identity.Api.Core.Interfaces.UseCases;
-using Identity.Api.Presenters;
+using Microsoft.Extensions.Options;
+using Identity.Core.Dto.UseCaseRequests;
+using Identity.Core.Interfaces.UseCases;
+using Identity.Models.Settings;
+using Identity.Presenters;
 
-namespace Identity.Api.Controllers
+namespace Identity.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class AuthController : ControllerBase
-  {
-    private readonly ILoginUseCase _loginUseCase;
-    private readonly LoginPresenter _loginPresenter;
-
-    public AuthController(ILoginUseCase loginUseCase, LoginPresenter loginPresenter)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-      _loginUseCase = loginUseCase;
-      _loginPresenter = loginPresenter;
-    }
+        private readonly ILoginUseCase _loginUseCase;
+        private readonly LoginPresenter _loginPresenter;
+        private readonly IExchangeRefreshTokenUseCase _exchangeRefreshTokenUseCase;
+        private readonly ExchangeRefreshTokenPresenter _exchangeRefreshTokenPresenter;
+        private readonly AuthSettings _authSettings;
+        
+        public AuthController(ILoginUseCase loginUseCase, LoginPresenter loginPresenter, IExchangeRefreshTokenUseCase exchangeRefreshTokenUseCase, ExchangeRefreshTokenPresenter exchangeRefreshTokenPresenter, IOptions<AuthSettings> authSettings)
+        {
+            _loginUseCase = loginUseCase;
+            _loginPresenter = loginPresenter;
+            _exchangeRefreshTokenUseCase = exchangeRefreshTokenUseCase;
+            _exchangeRefreshTokenPresenter = exchangeRefreshTokenPresenter;
+            _authSettings = authSettings.Value;
+        }
 
-    // POST api/auth/login
-    [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] Models.Request.LoginRequest request)
-    {
-      if (!ModelState.IsValid)
-      { // re-render the view when validation failed.
-        return BadRequest(ModelState);
-      }
-      await _loginUseCase.Handle(new LoginRequest(request.UserName, request.Password), _loginPresenter);
-      return _loginPresenter.ContentResult;
+        // POST api/auth/login
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] Models.Request.LoginRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            await _loginUseCase.Handle(new LoginRequest(request.UserName, request.Password, Request.HttpContext.Connection.RemoteIpAddress?.ToString()), _loginPresenter);
+            return _loginPresenter.ContentResult;
+        }
+
+        // POST api/auth/refreshtoken
+        [HttpPost("refreshtoken")]
+        public async Task<ActionResult> RefreshToken([FromBody] Models.Request.ExchangeRefreshTokenRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState);}
+            await _exchangeRefreshTokenUseCase.Handle(new ExchangeRefreshTokenRequest(request.AccessToken, request.RefreshToken, _authSettings.SecretKey), _exchangeRefreshTokenPresenter);
+            return _exchangeRefreshTokenPresenter.ContentResult;
+        }
     }
-  }
 }

@@ -1,7 +1,7 @@
-﻿using Identity.Api.Core.Dto.UseCaseResponses;
-using Identity.Api.Core.Interfaces;
+﻿using Identity.Core.Dto.UseCaseResponses;
+using Identity.Core.Interfaces;
 
-namespace Identity.Api.Core.Dto.UseCaseRequests
+namespace Identity.Core.Dto.UseCaseRequests
 {
   public class RegisterUserRequest : IUseCaseRequest<RegisterUserResponse>
   {

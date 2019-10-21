@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
  
 
-namespace Identity.Api.Infrastructure.Data.EntityFramework
+namespace Identity.Infrastructure.Data.EntityFramework
 {
     public class DbContextFactory : DesignTimeDbContextFactoryBase<ApplicationDbContext>
     {

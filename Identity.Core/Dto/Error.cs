@@ -1,6 +1,6 @@
 ﻿ 
 
-namespace Identity.Api.Core.Dto
+namespace Identity.Core.Dto
 {
     public sealed class Error
     {

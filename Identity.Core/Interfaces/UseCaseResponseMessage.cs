@@ -1,5 +1,5 @@
 ﻿
-namespace Identity.Api.Core.Interfaces
+namespace Identity.Core.Interfaces
 {
     public abstract class UseCaseResponseMessage
     {

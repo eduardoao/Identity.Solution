@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Identity.Api.Core.Interfaces
+namespace Identity.Core.Interfaces
 {
     public interface IUseCaseRequestHandler<in TUseCaseRequest, out TUseCaseResponse> where TUseCaseRequest : IUseCaseRequest<TUseCaseResponse>
     {

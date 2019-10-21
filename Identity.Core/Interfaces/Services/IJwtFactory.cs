@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Identity.Api.Core.Dto;
+using Identity.Core.Dto;
 
-namespace Identity.Api.Core.Interfaces.Services
+namespace Identity.Core.Interfaces.Services
 {
     public interface IJwtFactory
     {
-        Task<Token> GenerateEncodedToken(string id, string userName);
+        Task<AccessToken> GenerateEncodedToken(string id, string userName);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Identity.Api.Serialization
+namespace Identity.Serialization
 {
     public sealed class JsonSerializer
     {

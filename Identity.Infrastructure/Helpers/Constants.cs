@@ -1,6 +1,6 @@
 ﻿
 
-namespace Identity.Api.Infrastructure.Helpers
+namespace Identity.Infrastructure.Helpers
 {
   public static class Constants
   {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Identity.Api.Presenters
+namespace Identity.Presenters
 {
   public sealed class JsonContentResult : ContentResult
   {

@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
-using Identity.Api.Core.Domain.Entities;
-using Identity.Api.Infrastructure.Data.Entities;
+using Identity.Core.Domain.Entities;
+using Identity.Infrastructure.Identity;
 
 
-namespace Identity.Api.Infrastructure.Data.Mapping
+namespace Identity.Infrastructure.Data.Mapping
 {
     public class DataProfile : Profile
     {
         public DataProfile()
         {
-            CreateMap<User, AppUser>().ConstructUsing(u => new AppUser {Id=u.Id, FirstName = u.FirstName, LastName = u.LastName, UserName = u.UserName, PasswordHash = u.PasswordHash});
-            CreateMap<AppUser, User>().ConstructUsing(au => new User(au.FirstName, au.LastName, au.Email, au.UserName, au.Id, au.PasswordHash));
+            CreateMap<User, AppUser>().ConstructUsing(u => new AppUser {UserName = u.UserName, Email = u.Email}).ForMember(au=>au.Id,opt=>opt.Ignore());
+            CreateMap<AppUser, User>().ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email)).
+                                       ForMember(dest=> dest.PasswordHash, opt=> opt.MapFrom(src=>src.PasswordHash)).
+                                       ForAllOtherMembers(opt=>opt.Ignore());
+            
+
         }
     }
 }

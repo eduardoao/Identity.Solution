@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Identity.Api.Infrastructure.Data.EntityFramework.Entities
+namespace Identity.Infrastructure.Data.EntityFramework.Entities
 {
     public class BaseEntity
     {

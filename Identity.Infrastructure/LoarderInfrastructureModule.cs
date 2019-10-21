@@ -1,9 +1,10 @@
 ﻿using Autofac;
-using Identity.Api.Core.Interfaces.Gateways.Repositories;
-using Identity.Api.Core.Interfaces.Services;
-using Identity.Api.Infrastructure.Auth;
-using Identity.Api.Infrastructure.Data.EntityFramework.Repositories;
-namespace Identity.Api.Infrastructure
+using Identity.Core.Interfaces.Gateways.Repositories;
+using Identity.Core.Interfaces.Services;
+using Identity.Infrastructure.Data.EntityFramework.Repositories;
+using Identity.Infrastructure.Auth;
+
+namespace Identity.Infrastructure
 {
     public class LoarderInfrastructureModule : Module
     {

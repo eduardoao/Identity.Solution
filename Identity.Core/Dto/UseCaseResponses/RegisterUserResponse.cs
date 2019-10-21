@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Identity.Api.Core.Interfaces;
+using Identity.Core.Interfaces;
 
-namespace Identity.Api.Core.Dto.UseCaseResponses
+namespace Identity.Core.Dto.UseCaseResponses
 {
     public class RegisterUserResponse : UseCaseResponseMessage 
     {

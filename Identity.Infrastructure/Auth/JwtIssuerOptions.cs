@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
 
-namespace Identity.Api.Infrastructure.Auth
+namespace Identity.Infrastructure.Auth
 {
   public class JwtIssuerOptions
   {
@@ -41,8 +41,6 @@ namespace Identity.Api.Infrastructure.Auth
     /// Set the timespan the token will be valid for (default is 120 min)
     /// </summary>
     public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(120);
-
-
 
     /// <summary>
     /// "jti" (JWT ID) Claim (default ID is a GUID)

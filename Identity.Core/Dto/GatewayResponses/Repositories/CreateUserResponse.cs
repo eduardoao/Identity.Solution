@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Identity.Api.Core.Dto.GatewayResponses.Repositories
+namespace Identity.Core.Dto.GatewayResponses.Repositories
 {
   public sealed class CreateUserResponse : BaseGatewayResponse
   {

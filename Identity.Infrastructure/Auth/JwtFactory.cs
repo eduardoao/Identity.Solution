@@ -1,26 +1,28 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Identity.Core.Dto;
+using Identity.Core.Interfaces.Services;
 using Microsoft.Extensions.Options;
-using Identity.Api.Core.Dto;
-using Identity.Api.Core.Interfaces.Services;
+using Identity.Infrastructure.Interfaces;
 
-namespace Identity.Api.Infrastructure.Auth
+namespace Identity.Infrastructure.Auth
 {
-    public class JwtFactory : IJwtFactory
+    internal sealed class JwtFactory : IJwtFactory
     {
+        private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly JwtIssuerOptions _jwtOptions;
 
-        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions)
+        internal JwtFactory(IJwtTokenHandler jwtTokenHandler, IOptions<JwtIssuerOptions> jwtOptions)
         {
+            _jwtTokenHandler = jwtTokenHandler;
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<Token> GenerateEncodedToken(string id, string userName)
+        public async Task<AccessToken> GenerateEncodedToken(string id, string userName)
         {
             var identity = GenerateClaimsIdentity(id, userName);
 
@@ -41,9 +43,8 @@ namespace Identity.Api.Infrastructure.Auth
                 _jwtOptions.NotBefore,
                 _jwtOptions.Expiration,
                 _jwtOptions.SigningCredentials);
-
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return new Token(identity.Claims.Single(c => c.Type == "id").Value, encodedJwt, (int)_jwtOptions.ValidFor.TotalSeconds);
+          
+            return new AccessToken(_jwtTokenHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);
         }
 
         private static ClaimsIdentity GenerateClaimsIdentity(string id, string userName)
